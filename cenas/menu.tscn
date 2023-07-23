@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cl870rm8jrq5r"]
+
+[ext_resource type="Script" path="res://Button.gd" id="1_8rkq7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ednlm"]
+blend_mode = 1
+
+[node name="menu" type="Node2D"]
+
+[node name="Button" type="Button" parent="."]
+material = SubResource("CanvasItemMaterial_ednlm")
+offset_left = 512.0
+offset_top = 297.0
+offset_right = 699.0
+offset_bottom = 384.0
+text = "start
+"
+script = ExtResource("1_8rkq7")
+
+[connection signal="button_up" from="Button" to="Button" method="_on_button_up"]

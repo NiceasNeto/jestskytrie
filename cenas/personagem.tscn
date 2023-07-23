@@ -1,0 +1,142 @@
+[gd_scene load_steps=17 format=3 uid="uid://b4qt3yx5auw3e"]
+
+[ext_resource type="Texture2D" uid="uid://cmjtji0axoqse" path="res://kenney_tiny-ski/Tiles/tile_0070.png" id="1_1mj53"]
+[ext_resource type="Script" path="res://cenas/personagem.gd" id="1_moff0"]
+[ext_resource type="Texture2D" uid="uid://cq4jif76hlmai" path="res://kenney_tiny-ski/Tiles/tile_0071.png" id="2_8jp7k"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27d8a"]
+atlas = ExtResource("1_1mj53")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b8aew"]
+atlas = ExtResource("2_8jp7k")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhh1f"]
+atlas = ExtResource("1_1mj53")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_556a0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27d8a")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b8aew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mhh1f")
+}],
+"loop": true,
+"name": &"run",
+"speed": 2.0
+}]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_r0kau"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_tw2n0"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.415663, 360), -4010.21, -4010.21, 0, 0, Vector2(0.710843, -322.105), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0daxt"]
+curve = SubResource("Curve_tw2n0")
+
+[sub_resource type="Curve" id="Curve_ggw7b"]
+max_value = 200.0
+_data = [Vector2(0, 200), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_xs2lq"]
+curve = SubResource("Curve_ggw7b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wsest"]
+emission_shape = 1
+emission_sphere_radius = 114.17
+particle_flag_disable_z = true
+direction = Vector3(1, -10, 0)
+spread = 147.32
+gravity = Vector3(0, 98, 0)
+angular_velocity_curve = SubResource("CurveTexture_0daxt")
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+scale_min = 0.0
+scale_max = 5.0
+color = Color(0.87451, 1, 1, 1)
+anim_speed_max = 9.26
+anim_speed_curve = SubResource("CurveTexture_xs2lq")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0uyw1"]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4vnml"]
+emission_shape = 1
+emission_sphere_radius = 1.2
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+direction = Vector3(1, 3, 0)
+gravity = Vector3(0, -200, 0)
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+linear_accel_min = -63.16
+linear_accel_max = 100.0
+scale_min = 0.0
+scale_max = 0.1
+color = Color(0.823529, 0.984314, 0.992157, 1)
+anim_speed_max = 6.06
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vmwml"]
+size = Vector2(16, 16)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(578, 326)
+script = ExtResource("1_moff0")
+
+[node name="anima" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_556a0")
+animation = &"idle"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.2, 1.2)
+limit_left = 1
+limit_top = 1
+limit_right = 1152
+position_smoothing_speed = 200.0
+
+[node name="neve" type="GPUParticles2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_r0kau")
+position = Vector2(0.333328, -1)
+scale = Vector2(10, 10)
+amount = 300
+process_material = SubResource("ParticleProcessMaterial_wsest")
+
+[node name="rastro" type="GPUParticles2D" parent="."]
+visible = false
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_0uyw1")
+scale = Vector2(7, 7)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_4vnml")
+trail_enabled = true
+trail_lifetime = 0.01
+trail_sections = 100
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vmwml")
