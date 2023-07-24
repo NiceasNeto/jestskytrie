@@ -9,14 +9,8 @@ var adicionalY = 20
 var rota = 20
 var relogiy = 0.0
 signal Touch
+signal collided
 
-func _graus():
-	if velocity.x < lado:
-		rotation_degrees -= -40 * rota
-		print("sssssssss")
-	if velocity.x > lado:
-		rotation_degrees += 40 * rota
-	
 
 
 
@@ -31,7 +25,7 @@ func _graus():
 func _physics_process(_delta):
 	
 	
-	_graus()
+	
 	
 	#move down here bellow
 	relogiy += _delta
@@ -63,16 +57,22 @@ func _physics_process(_delta):
 		queue_free()
 	else:
 		pass
-	
-	
+	col()
 	move_and_slide()
+func col():
+	for u in get_slide_collision_count():
+		var collision = get_slide_collision(u)
+		if collision:
+			get_tree().change_scene_to_file("res://cenas/game_over_fase_1.tscn")
+
+func passou():
+	pass
+
+
 
 
 
 
 
 func _on_area_2d_area_entered(area):
-	queue_free()
-
-
-
+	get_tree().change_scene_to_file("res://cenas/fase_2.tscn")

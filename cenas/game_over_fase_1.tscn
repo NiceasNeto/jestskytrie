@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsum7vd0ceniv"]
+
+[ext_resource type="Script" path="res://cenas/Button.gd" id="1_scp5r"]
+[ext_resource type="Script" path="res://cenas/Button2.gd" id="2_84wwk"]
+
+[node name="game over fase 1" type="Node2D"]
+
+[node name="restart" type="Button" parent="."]
+offset_left = 369.0
+offset_top = 154.0
+offset_right = 675.0
+offset_bottom = 258.0
+text = "restart
+"
+script = ExtResource("1_scp5r")
+
+[node name="menu" type="Button" parent="."]
+offset_left = 365.0
+offset_top = 273.0
+offset_right = 682.0
+offset_bottom = 350.0
+text = "menu
+"
+script = ExtResource("2_84wwk")
+
+[connection signal="button_down" from="restart" to="restart" method="_on_button_down"]
+[connection signal="button_down" from="menu" to="menu" method="_on_button_down"]
